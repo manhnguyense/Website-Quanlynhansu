@@ -11,5 +11,6 @@ public interface TaskServices {
 	public boolean deleteTask(int id);
 	public  boolean addTask(Task task);
 	public boolean updateTask(Task task);
+	public List<Task>getDealine(String date, String hour, String minutes);
 
 }

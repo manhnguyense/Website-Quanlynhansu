@@ -228,8 +228,8 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
-
+        <div class="container">
+		<div class="row col-md-12">
           <!-- Page Heading -->
           <h1 class="h3 mb-2 text-gray-800">Tables</h1>
           <!-- DataTales Example -->
@@ -282,9 +282,9 @@
 		                      	</c:forEach>
 		                      </td>
 		                      <td>
-		                      <select id="myselect" class="choose">
+		                      <select id="myselect" class="choose form-control">
 							    <option value="1"> ${item.getState() }</option>
-							    <option value="2">NotAccept</option>
+							    <option value="2">Notaccept</option>
 							    <option value="3">Working</option>
 							    <option value="4">Success</option>
 							</select>                     
@@ -299,7 +299,12 @@
                   </tbody>
                 </table>
               </div>
+              <span>Percent Task Success</span>
+	            <div class="progress">
+					  <div class="progress-bar" role="progressbar" style="width:${numSuccess }%;" aria-valuenow="${numSuccess }" aria-valuemin="0" aria-valuemax="100">${numSuccess }%</div>
+				  </div>
             </div>
+          </div>
           </div>
           </div>
 

@@ -33,6 +33,10 @@ public class TaskServicesImpl implements TaskServices{
 		
 		return taskDAO.updateTask(task);
 	}
+	public List<Task> getDealine(String date, String hour, String minutes) {
+		
+		return taskDAO.getDealine(date, hour, minutes);
+	}
 	
 	
 	

@@ -36,11 +36,23 @@ public class MembersController {
 	@GetMapping("taskMember")
 	public String getMember(ModelMap map, HttpSession httpSession) {
 		
-		String username=(String) httpSession.getAttribute("username");
+		 String username=(String) httpSession.getAttribute("username");
 		 Members members=mem.getListTask(username);
 		 Set<Task>list=members.getListTask();
-		 map.addAttribute("listTask", list);
+		 int taskSuccess=0;
+		 
+		 
+		 for (Task task : list) {
+				if(task.getState().equals("Success")) {
+					taskSuccess++;
+				}
+		 }
+		 int Total=(taskSuccess*100)/list.size();
+	
 		
+		
+		 map.addAttribute("listTask", list);
+		 map.addAttribute("numSuccess",Total);
 		
 		return"TaskMemberDetail";
 	}

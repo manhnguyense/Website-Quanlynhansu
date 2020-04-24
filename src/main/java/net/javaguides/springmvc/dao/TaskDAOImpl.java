@@ -64,6 +64,13 @@ public class TaskDAOImpl implements TaskDAO{
 		}
 		return false;
 	}
+	@Transactional
+	public List<Task> getDealine(String date, String hour, String minutes) {
+		String sql="from TASK where Duedatetime ='"+date+"' and Duedatehour ='"+hour+"' and Duedateminute='"+minutes+"'";
+		Session session=sessionFactory.getCurrentSession();
+		List<Task>list=session.createQuery(sql).getResultList();
+		return list;
+	}
 	
 
 }

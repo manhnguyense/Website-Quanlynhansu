@@ -13,8 +13,11 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -52,7 +55,7 @@ public class APIController {
 		task.setTitle(jsonNode.get("title").asText());
 		task.setDuedatetime(jsonNode.get("duedate").asText());
 		task.setDescription(jsonNode.get("describer").asText());
-		task.setState("NOTACCEPT");
+		task.setState("Notaccept");
 		JsonNode jsonMember=jsonNode.get("listmember");
 		Set<Members>listMembers=new HashSet<Members>();
 		for (JsonNode jsonNode2 : jsonMember) {

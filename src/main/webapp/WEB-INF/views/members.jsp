@@ -310,6 +310,7 @@
                       <th>Email</th>
                       <th>Sex</th>
                       <th>Task</th>
+                      <th>State</th>
                       <th>Choose</th>
                     </tr>
                   </thead>
@@ -322,6 +323,7 @@
                       <th>Email</th>
                       <th>Sex</th>
                       <th>Task</th>
+                      <th>State</th>
                       <th>Choose</th>
                     </tr>
                   </tfoot>
@@ -338,7 +340,7 @@
 		                      <td>	
 		                      	<c:forEach var="task" items="${item.getListTask() }">
 		                      		
-		                      		${task.getTitle() }-|-<span class="red">${task.getState() }</span></br>
+		                      		<span class="red">${task.getState() }</span>&emsp;&emsp; <span style='text-align:center;vertical-align:middle'>${task.getTitle() }</span></br>
 		                      		
 		                      	</c:forEach>
 		                      </td>

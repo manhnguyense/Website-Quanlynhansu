@@ -20,6 +20,7 @@ $(document).ready(function(){
 	
 	function hide(){
 		$(".add_task").hide();
+		$(".form-notify").hide();
 	}
 	hide();
 	$(".btn-back").on("click",function(){
@@ -181,6 +182,10 @@ $(document).ready(function(){
 					}
 				}	
 		})
+	})
+	//showform
+	$(".btn-notify").on("click",function(){
+		$(".form-notify").show();
 	})
 	
 })
