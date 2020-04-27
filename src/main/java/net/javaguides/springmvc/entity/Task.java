@@ -30,12 +30,11 @@ public class Task {
 	private String Duedatehour;
 	private String Duedateminute;
 	private String State;
+	private String DueNotify;
+	private String DueNotifyHour;
 	
-	  public String getState() {
-		return State;
-	}
 
-
+	  
 
 	public void setState(String state) {
 		State = state;
@@ -50,9 +49,9 @@ public class Task {
 	public int getIdtask() {
 		return Idtask;
 	}
-	
-	
-
+	  public String getState() {
+		return State;
+	}
 	public void setIdtask(int idtask) {
 		Idtask = idtask;
 	}
@@ -91,9 +90,26 @@ public class Task {
 		
 	}
 	
-	  public Set<Members> getListmember() { return listmember; } 
-	  public void
-	  setListmember(Set<Members> listmember) { this.listmember = listmember; }
+	public Set<Members> getListmember()
+	{ return listmember; 
+	} 
+	public void setListmember(Set<Members> listmember) 
+	{ 
+		this.listmember = listmember; 
+	}
+	public String getDueNotify() {
+		return DueNotify;
+	}
+	public void setDueNotify(String dueNotify) {
+		DueNotify = dueNotify;
+	}
+	public String getDueNotifyHour() {
+		return DueNotifyHour;
+	}
+	public void setDueNotifyHour(String dueNotifyHour) {
+		DueNotifyHour = dueNotifyHour;
+	}
+	
 	 
 	
 }

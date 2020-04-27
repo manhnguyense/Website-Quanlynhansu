@@ -49,12 +49,35 @@ public class APIController {
 		ObjectMapper objectMapper=new ObjectMapper();
 		JsonNode jsonNode=objectMapper.readTree(json);
 		String s=jsonNode.get("duetime").asText();
+		Integer hour=Integer.parseInt(s.substring(0,2));
 		Task task=new Task();
 		task.setDuedateminute(s.substring(3,5));
+		Integer timeNotify=Integer.parseInt(s.substring(3,5))-jsonNode.get("notifytime").asInt();
+		String duetime="";
+		if(timeNotify>=0) {
+			if(timeNotify<10&&timeNotify>0) {
+				 duetime="0"+timeNotify.toString();
+			}else{
+				 duetime=timeNotify.toString();
+			}
+		}else {
+			timeNotify=59-jsonNode.get("notifytime").asInt()+Integer.parseInt(s.substring(3,5));
+			duetime=timeNotify.toString();
+			hour--;
+		}
+		String covertHour="";
+		if(hour<10) {
+			covertHour="0"+hour.toString();
+		}else {
+			covertHour=hour.toString();
+		}
+		task.setDueNotify(duetime);
+		task.setDueNotifyHour(covertHour);
 		task.setDuedatehour(s.substring(0,2));
 		task.setTitle(jsonNode.get("title").asText());
 		task.setDuedatetime(jsonNode.get("duedate").asText());
 		task.setDescription(jsonNode.get("describer").asText());
+		
 		task.setState("Notaccept");
 		JsonNode jsonMember=jsonNode.get("listmember");
 		Set<Members>listMembers=new HashSet<Members>();
@@ -63,7 +86,6 @@ public class APIController {
 			mb.setIdmember(jsonNode2.get("id").asInt());
 			listMembers.add(mb); 
 		}
-
 		task.setListmember(listMembers);
 		boolean rs= taskServices.addTask(task);
 		if(rs==true) {
@@ -164,6 +186,32 @@ public class APIController {
 		if(rs==true) {
 			session.setAttribute("username", username);
 			return "true";
+		}
+		return "false";
+	}
+	@PostMapping("updatenotifytime")
+	@ResponseBody
+	public String UpdateNotifyTime(@RequestParam int id,@RequestParam int notifyTime) {
+		Task task1=taskServices.getMemberOfTask(id);
+		Integer timeNotify=Integer.parseInt(task1.getDuedateminute())-notifyTime;
+		String duetime="";
+		Integer hour=Integer.parseInt(task1.getDuedatehour());
+		if(timeNotify>=0) {
+			if(timeNotify<10&&timeNotify>0) {
+				 duetime="0"+timeNotify.toString();
+			}else{
+				 duetime=timeNotify.toString();
+			}
+		}else {
+			timeNotify=59-notifyTime+Integer.parseInt(task1.getDuedateminute());
+			duetime=timeNotify.toString();
+			hour--;
+		}
+		task1.setDueNotify(duetime);
+		task1.setDueNotifyHour(hour.toString());
+		boolean rs= taskServices.updateTask(task1);
+		if(rs==true) {
+		return "true";		
 		}
 		return "false";
 	}

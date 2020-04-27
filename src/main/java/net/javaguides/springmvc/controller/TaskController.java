@@ -39,38 +39,35 @@ public class TaskController {
 	public String getAll(ModelMap map) {
 		List<Task>list=taskServices.getAll();
 		List<Members>listmember=memberServices.getAll();
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss");  
-		LocalDateTime now = LocalDateTime.now();  
-		String currentDate=dtf.format(now).toString();
-		Integer minute=Integer.parseInt(currentDate.substring(14,16))+5;
-		List<Task>listDealine=taskServices.getDealine(currentDate.substring(0,10),currentDate.substring(11,13),minute.toString());
-		for (Task task : listDealine) {
-		Set<Members>listmem=task.getListmember(); for (Members mem:listmem) {
-		SimpleMailMessage message = new SimpleMailMessage();  
-		message.setTo(mem.getEmail()); 
-		message.setSubject("TASK dealine "+
-		task.getDuedatetime()+" Time "+task.getDuedatehour()+":"+task.
-		getDuedateminute()+" by "+mem.getName());
-		message.setText("You can Succes States your task");
-			 //Send Message! 
-		this.emailSender.send(message); 
-		}
-		scheduleFixedDelayTask();
-	
-		}
-		 
- 
 		map.addAttribute("listTask", list);
 		map.addAttribute("listMember", listmember);
 		return "task";
 		
 	}
-	// spring  scheduled using send email when task accept
-	@Scheduled(fixedDelay = 1000)
-	public void scheduleFixedDelayTask() {
-	    System.out.println(
-	      "Fixed delay task - " + System.currentTimeMillis() / 1000);
-	}
+	// Scheduled send mail notify 
+	
+	  @Scheduled(fixedDelay = 1000*60) 
+	  public void scheduleFixedDelayTask() {
+		  	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss");  
+			LocalDateTime now = LocalDateTime.now();  
+			String currentDate=dtf.format(now).toString();
+			Integer minute=Integer.parseInt(currentDate.substring(14,16));
+			List<Task>listDealine=taskServices.getDealine(currentDate.substring(0,10),currentDate.substring(11,13),minute.toString());
+			//List<Task>listDealine=taskServices.getDealine("04/27/2020","08","32");		
+			 for (Task task : listDealine) 
+			 { Set<Members>listmem=task.getListmember(); 
+				 for (Members mem:listmem) 
+				 { 
+					 SimpleMailMessage message = new SimpleMailMessage();
+				     message.setTo(mem.getEmail()); message.setSubject("TASK dealine "+task.getTitle()+
+				     task.getDuedatetime()+" by "+mem.getName());
+				     message.setText("You can Succes States your task"); //Send Message!
+				     this.emailSender.send(message);
+				  } 
+			 }
+			 
+	  }
+	 
 	@GetMapping("{id}")
 	public String deleteTask(@PathVariable int id) {
 		System.out.println(id);

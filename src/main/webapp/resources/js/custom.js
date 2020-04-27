@@ -1,18 +1,4 @@
 $(document).ready(function(){
-/*	$(".btn-delete").on("click",function(){
-		value=$(this).attr("data-id");
-		alert(value);
-		$.ajax({
-			url:"/springmvc5-hibernate5-jsp-mysql-example/api/deleteTask",
-			type:"POST",
-			data:{
-				value:value,
-				
-			},
-			success: function(value){
-			}	
-	})
-	})*/
 	$(".btn-add").on("click",function(){
 		$(".table_task").hide();
 		$(".add_task").show();
@@ -22,7 +8,7 @@ $(document).ready(function(){
 		$(".add_task").hide();
 		$(".form-notify").hide();
 	}
-	hide();
+	
 	$(".btn-back").on("click",function(){
 		$(".table_task").show();
 		$(".add_task").hide();
@@ -33,7 +19,8 @@ $(document).ready(function(){
 		describer=$('textarea[id="discriber"]').val();
 		duedate=$('input[id="datepicker"]').val();
 		duetime=$('input[id="timepicker1"]').val();
-		 var array = [];
+		notifytime=$('input[id="notifytime"').val();
+		var array = [];
 	        $(':checkbox:checked').each(function(i){
 	         Object1={};
 	         
@@ -46,6 +33,7 @@ $(document).ready(function(){
 		json["duedate"]=duedate;
 		json["duetime"]=duetime;
 		json["listmember"]=array;
+		json["notifytime"]=notifytime;
 	$.ajax({
 		url:"/springmvc5-hibernate5-jsp-mysql-example/api/add",
 		type:"GET",
@@ -183,9 +171,42 @@ $(document).ready(function(){
 				}	
 		})
 	})
-	//showform
-	$(".btn-notify").on("click",function(){
-		$(".form-notify").show();
+	
+	//send data update notify time
+	$(document).on("click",".btn-update-notify",function(){
+		var id = $(this).closest("tr").find(".idstask").text() 
+		var notifyTime= $(this).closest("tr").find('input[id="notifyTask"]').val();
+	
+		$.ajax({
+			url:"/springmvc5-hibernate5-jsp-mysql-example/api/updatenotifytime",
+			type:"POST",
+			data:{
+					id:id,
+					notifyTime:notifyTime
+					
+				},
+				success: function(value){
+					if(value=="true"){
+						location.reload();
+					}
+				}	
+		})
 	})
+	$(document).on("click",".paginate_button",function(){
+		$(".form-notify").hide();
+	})
+	hide();
+	//showform
+	$(document).on("click",".btn-notify",function(){
+		$(this).hide();
+		$(this).closest("tr").find(".form-notify").show();
+		$(".default").hide();
+	})
+	$(document).on("click",".btn-close",function(){
+		$(this).closest("tr").find(".form-notify").hide();
+		$(".btn-notify").show();
+		$(".default").show();
+	})
+	
 	
 })
