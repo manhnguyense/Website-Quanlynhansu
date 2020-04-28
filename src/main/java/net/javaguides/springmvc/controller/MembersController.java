@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import net.javaguides.springmvc.entity.Members;
 import net.javaguides.springmvc.entity.Task;
+import net.javaguides.springmvc.entity.TaskDetail;
 import net.javaguides.springmvc.services.MemberServices;
 
 @Controller
@@ -40,17 +41,12 @@ public class MembersController {
 		 Members members=mem.getListTask(username);
 		 Set<Task>list=members.getListTask();
 		 int taskSuccess=0;
-		 
-		 
 		 for (Task task : list) {
 				if(task.getState().equals("Success")) {
 					taskSuccess++;
 				}
 		 }
 		 int Total=(taskSuccess*100)/list.size();
-	
-		
-		
 		 map.addAttribute("listTask", list);
 		 map.addAttribute("numSuccess",Total);
 		

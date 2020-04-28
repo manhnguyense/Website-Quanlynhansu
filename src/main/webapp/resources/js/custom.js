@@ -155,13 +155,23 @@ $(document).ready(function(){
 	$(".btn-update-state").on("click",function(){
 		var id = $(this).closest("tr").find(".idchange").text() 
 		var state = $(this).closest("tr").find(".choose").find("option:selected").text() 
-	
+		var array = [];
+	        $(this).closest("tr").find(':checkbox:checked').each(function(i){
+	         Object1={};
+	         Object1["id"] = $(this).val();
+	         array.push(Object1);
+	        });
+	        json={};
+	        json["id"]=id;
+			json["state"]=state;
+			json["list"]=array;
+			console.log(json);
 		$.ajax({
 			url:"/springmvc5-hibernate5-jsp-mysql-example/api/updatestate",
 			type:"POST",
 			data:{
-					id:id,
-					state:state
+					json:JSON.stringify(json)
+				
 					
 				},
 				success: function(value){
@@ -207,6 +217,5 @@ $(document).ready(function(){
 		$(".btn-notify").show();
 		$(".default").show();
 	})
-	
 	
 })

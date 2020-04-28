@@ -18,6 +18,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud.UpdateOperation.UpdateType;
+
+
 @Entity(name="TASK")
 public class Task {
 
@@ -32,15 +35,19 @@ public class Task {
 	private String State;
 	private String DueNotify;
 	private String DueNotifyHour;
-	
-
-	  
-
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name="Idtask")
+	private Set<TaskDetail> listTaskDetail;
+	public Set<TaskDetail> getListTaskDetail() {
+		return listTaskDetail;
+	}
+	public void setListTaskDetail(Set<TaskDetail> listTaskDetail) {
+		this.listTaskDetail = listTaskDetail;
+	}
 	public void setState(String state) {
 		State = state;
 	}
 	@ManyToMany(fetch = FetchType.EAGER)
-	  
 	  @JoinTable(name="TASK_MEMBER", joinColumns= {@JoinColumn(name="Idtask")},
 	  inverseJoinColumns= {@JoinColumn(name="Idmember")}) private
 	  Set<Members>listmember;

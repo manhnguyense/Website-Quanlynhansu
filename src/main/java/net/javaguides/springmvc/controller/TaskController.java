@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import net.javaguides.springmvc.entity.Members;
 import net.javaguides.springmvc.entity.Task;
+import net.javaguides.springmvc.entity.TaskDetail;
 import net.javaguides.springmvc.services.MemberServices;
 import net.javaguides.springmvc.services.TaskServices;
 
@@ -87,10 +88,5 @@ public class TaskController {
 	public String login() {
 		return "login";
 	}
-	
-
-
-
-
 	
 }

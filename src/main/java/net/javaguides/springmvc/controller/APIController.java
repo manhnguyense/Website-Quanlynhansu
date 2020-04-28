@@ -6,6 +6,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
@@ -30,7 +31,9 @@ import com.mysql.cj.xdevapi.JsonArray;
 
 import net.javaguides.springmvc.entity.Members;
 import net.javaguides.springmvc.entity.Task;
+import net.javaguides.springmvc.entity.TaskDetail;
 import net.javaguides.springmvc.services.MemberServices;
+import net.javaguides.springmvc.services.TaskDetailService;
 import net.javaguides.springmvc.services.TaskServices;
 
 @Controller
@@ -41,7 +44,8 @@ public class APIController {
 	TaskServices taskServices;
 	@Autowired
 	MemberServices memberServices;
-	
+	@Autowired
+	TaskDetailService taskDetailServices;
 	
 	@GetMapping("add")
 	@ResponseBody
@@ -155,12 +159,24 @@ public class APIController {
 	}
 	@PostMapping("updatestate")
 	@ResponseBody
-	public String updateTask(@RequestParam int id,@RequestParam String state)  {
-		Task task1=taskServices.getMemberOfTask(id);
-		task1.setState(state);
-		boolean rs= taskServices.updateTask(task1);
-		if(rs==true) {
-		return "true";		
+	public String updateState(@RequestParam String json) throws IOException  {
+		ObjectMapper oMapper=new ObjectMapper();
+		JsonNode jNode=oMapper.readTree(json);
+		Task task1=taskServices.getMemberOfTask(jNode.get("id").asInt());
+		task1.setState(jNode.get("state").asText());
+		Set<TaskDetail>list=new HashSet<TaskDetail>();
+		JsonNode jNode2=jNode.get("list");
+		for (JsonNode jsonNode : jNode2) {
+			TaskDetail task=taskDetailServices.getTaskDetailById(jsonNode.get("id").asInt());
+			task.setState(true);
+			task.setTask(task1);
+		
+			taskDetailServices.save(task);
+		}
+		boolean rs= taskServices.updateTask(task1); 
+		if(rs==true)
+		{
+			  return "true"; 
 		}
 		return "false";
 	}
