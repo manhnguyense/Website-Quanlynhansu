@@ -47,7 +47,7 @@ public class TaskController {
 	}
 	// Scheduled send mail notify 
 	
-	/*  @Scheduled(fixedDelay = 1000*60) 
+	 @Scheduled(fixedDelay = 1000*60) 
 	  public void scheduleFixedDelayTask() {
 		  	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/YYYY HH:mm:ss");  
 			LocalDateTime now = LocalDateTime.now();  
@@ -68,7 +68,7 @@ public class TaskController {
 			 }
 			 
 	  }
-	 */
+	
 	@GetMapping("{id}")
 	public String deleteTask(@PathVariable int id) {
 		System.out.println(id);
