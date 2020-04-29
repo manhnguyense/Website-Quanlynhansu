@@ -219,5 +219,28 @@ $(document).ready(function(){
 		$(".btn-notify").show();
 		$(".default").show();
 	})
-	
+	//upload file
+	files=[];
+	filename="";
+	$("#filename").on("change",function(event){
+		files=event.target.files;
+		filename=event.target.files[0].name;
+		forms=new FormData();
+		forms.append("file",files[0]);
+		console.log(filename);
+		$.ajax({
+			url:"/springmvc5-hibernate5-jsp-mysql-example/api/UploadFile",
+			type:"POST",
+			data:forms,
+			contentType:false,
+			processData:false,
+			enctype:"multipart/form-data",
+			success: function(value){	
+				if(value=="true"){					
+					$('.progress-bar').width('100%')
+				}
+			}	
+	})
+		
+	})
 })

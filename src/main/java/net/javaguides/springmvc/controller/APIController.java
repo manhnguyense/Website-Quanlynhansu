@@ -1,14 +1,17 @@
 package net.javaguides.springmvc.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
@@ -24,6 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -230,6 +235,29 @@ public class APIController {
 		return "true";		
 		}
 		return "false";
+	}
+	@Autowired
+	ServletContext context;
+	@PostMapping("UploadFile")
+	@ResponseBody
+	public String UploadFile(MultipartHttpServletRequest request) {
+		String path_save_file=context.getRealPath("/resources/document/");
+		Iterator<String>listNames=request.getFileNames();
+		MultipartFile mpf=request.getFile(listNames.next());
+		File file_save=new File(path_save_file+mpf.getOriginalFilename());
+		try {
+			mpf.transferTo(file_save);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(file_save!=null) {
+			return "true";
+		}
+		return"false";
 	}
 
 }

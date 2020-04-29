@@ -113,18 +113,27 @@
 		                       <td>
 		                      	<%int num=0; %>    
 		                      	<c:forEach var="detail" items="${item.getListTaskDetail() }">  
+		                      	<%-- <img alt="" src='<c:url value="/resources/document/${detail.getDocument() }"/>'> --%>
+		                      	<%-- <iframe src='<c:url value="/resources/document/${detail.getDocument() }"/>'></iframe> --%>
+		                      	
+		                      	
+		                      
 			                      	<div class="form-check">   
 			                   	<c:choose>
 									  <c:when test="${detail.isState()==true }">	 
 									   	 <div class="checkbox">
+									   	 
 											<label><input type="checkbox" checked="checked" name="members"value="${detail.getId() }">${detail.getTaskname() }</label>
+										 
 										</div>
+										<a href='<c:url value="/resources/document/${detail.getDocument() }"/>'>+viewFile</a>
 										<%num++; %>
 									  </c:when>
 									  <c:otherwise>
 										  <div class="checkbox">
 												<label><input type="checkbox" name="members"value="${detail.getId() }">${detail.getTaskname() }</label>
 											</div>
+											<a href='<c:url value="/resources/document/${detail.getDocument() }"/>'>+viewFile</a>
 									  </c:otherwise>
 									</c:choose>
 									 </div>

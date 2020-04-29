@@ -23,6 +23,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
@@ -83,6 +84,14 @@ public class AppContext {
 	        props.put("mail.debug", "true");
 	 
 	        return mailSender;
+	    }
+	 @Bean(name = "multipartResolver")
+	    public MultipartResolver getMultipartResolver() {
+	        CommonsMultipartResolver resover = new CommonsMultipartResolver();
+	        // 1MB
+	        resover.setMaxUploadSize(1 * 1024 * 1024);
+	 
+	        return resover;
 	    }
 
 	

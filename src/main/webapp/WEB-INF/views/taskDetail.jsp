@@ -169,7 +169,8 @@
 	         
   			</div>   
 
-			<span>Add task detail</span>
+			<span>Add task detail .</span><span>Add only 1st file</span><br>
+			
             <a class="btn btn-info" href='<c:url value="taskDetail/${task.getIdtask() } "/>'>+</a>
           
           </div>
