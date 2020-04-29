@@ -135,8 +135,8 @@ public class APIController {
 		ObjectMapper objectMapper=new ObjectMapper();
 		JsonNode jsonNode=objectMapper.readTree(json);
 		String s=jsonNode.get("duetime").asText();
-		Task task=new Task();
-		task.setIdtask(jsonNode.get("id").asInt());
+		Task task=taskServices.getMemberOfTask(jsonNode.get("id").asInt());
+		//task.setIdtask(jsonNode.get("id").asInt());
 		task.setDuedateminute(s.substring(0,2));
 		task.setDuedatehour(s.substring(3,5));
 		task.setTitle(jsonNode.get("title").asText());

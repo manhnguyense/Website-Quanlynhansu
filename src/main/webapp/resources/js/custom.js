@@ -95,13 +95,15 @@ $(document).ready(function(){
 		duetime=$('input[id="timepicker1"]').val();
 		id=$("#idtask").attr("data-id");
 		state=$('input[id="state"]').val();
-		 var array = [];
+		var array = [];
 	        $(':checkbox:checked').each(function(i){
 	         Object1={};
 	         
 	          Object1["id"] = $(this).val();
 	          array.push(Object1);
 	        });
+	        
+	    
 		json={}
 		json["id"]=id;
 		json["title"]=title;
@@ -111,7 +113,7 @@ $(document).ready(function(){
 		json["state"]=state;
 		json["listmember"]=array;
 		console.log(json);
-	$.ajax({
+		$.ajax({
 		url:"/springmvc5-hibernate5-jsp-mysql-example/api/updateTask",
 		type:"POST",
 		data:{

@@ -23,6 +23,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
 @PropertySource("classpath:database.properties")
@@ -83,5 +84,6 @@ public class AppContext {
 	 
 	        return mailSender;
 	    }
+
 	
 }

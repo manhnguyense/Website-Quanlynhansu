@@ -154,7 +154,12 @@
 	         
   			</div>  
   			
-  			 <div>
+  			
+  			
+  			 <button type="submit" class="btn btn-primary btn-update">Update</button>
+          </div>
+          <div class="col-md-6">
+           <div>
 	        	<label>List Member</label>
 	        	<c:forEach var="members" items="${listMember}">
 	        		<div class="checkbox">
@@ -163,8 +168,10 @@
 	        	</c:forEach> 
 	         
   			</div>   
-  			
-  			 <button type="submit" class="btn btn-primary btn-update">Update</button>
+
+			<span>Add task detail</span>
+            <a class="btn btn-info" href='<c:url value="taskDetail/${task.getIdtask() } "/>'>+</a>
+          
           </div>
           </div>
 
