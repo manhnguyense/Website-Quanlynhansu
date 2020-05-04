@@ -43,6 +43,7 @@ public class TaskController {
 		map.addAttribute("listTask", list);
 		map.addAttribute("listMember", listmember);
 		return "task";
+		//return "active";
 		
 	}
 	// Scheduled send mail notify 

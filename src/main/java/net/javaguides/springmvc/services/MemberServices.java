@@ -10,5 +10,6 @@ public interface MemberServices {
 	public boolean addMember(Members mb);
 	public boolean login(String username,String password);
 	public Members getListTask(String username);
+	public Members getById(int id);
 
 }

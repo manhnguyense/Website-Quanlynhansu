@@ -63,5 +63,12 @@ public class MemberDAOImpl implements MemberDAO {
 			Members mem =(Members) session.createQuery(sql).getSingleResult();
 			return mem;
 	}
+	@Transactional
+	public Members getById(int id) {
+		String sql="from MEMBERS where Idmember="+id;
+		Session session=sessionFactory.getCurrentSession();
+		Members members=(Members) session.createQuery(sql).getSingleResult();
+		return members;
+	}
 
 }

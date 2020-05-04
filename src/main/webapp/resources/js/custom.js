@@ -227,7 +227,7 @@ $(document).ready(function(){
 		filename=event.target.files[0].name;
 		forms=new FormData();
 		forms.append("file",files[0]);
-		console.log(filename);
+		//console.log(filename);
 		$.ajax({
 			url:"/springmvc5-hibernate5-jsp-mysql-example/api/UploadFile",
 			type:"POST",
@@ -239,8 +239,81 @@ $(document).ready(function(){
 				if(value=="true"){					
 					$('.progress-bar').width('100%')
 				}
-			}	
-	})
+			}	})
 		
-	})
+		})
+		//admin contact
+		$(".btn-xq").on("click",function(){
+		var member=$("#Idlist :selected").attr("data-id");
+		var message=$("#message").val();
+		var file=filename;
+		
+		$.ajax({
+			url:"/springmvc5-hibernate5-jsp-mysql-example/api/saveActive",
+			type:"POST",
+			data:{
+					member:member,
+					message:message,
+					file:file
+				
+					
+				},
+				success: function(value){
+					if(value=="true"){
+						location.reload();
+					}
+				}	
+		})
+		})
+		//
+		$("#Idlist").on("change",function(){
+			var member=$("#Idlist :selected").attr("data-id");
+			$.ajax({
+				url:"/springmvc5-hibernate5-jsp-mysql-example/api/loaddata",
+				type:"POST",
+				data:{
+						member:member,
+					},
+					
+					success: function(value){
+						console.log(value)
+						$(".email").text(value.email);
+						var html1='';
+						for (var i = 0; i < value.listActive.length; i++) {
+							 html1+="<br><h4> File name: "+value.listActive[i].filename+"</h4><br>"+							
+									"<h4> User send: "+value.listActive[i].userSend+"</h4><br>"+
+									"<h4> Message: "+value.listActive[i].message+"</h4><br>"+
+									"<h4> DateTime Created: "+value.listActive[i].datetimecreated+"</h4><br>";
+							html1+="<hr>";
+		
+						}
+						$(".information").html(html1);
+					}	
+			})
+			
+		})
+		//employee contact
+		$(".btn-emp").on("click",function(){
+			var file=filename;
+			var message=$("#message").val();
+			var id=$("#iduser").attr("data-id");
+			$.ajax({
+				url:"/springmvc5-hibernate5-jsp-mysql-example/api/employSaveActive",
+				type:"POST",
+				data:{
+						id:id,
+						message:message,
+						file:file
+					
+						
+					},
+					success: function(value){
+						if(value=="true"){
+							location.reload();
+						}
+					}	
+			})
+		
+	
+		})
 })

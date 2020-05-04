@@ -30,8 +30,12 @@ public class MemberServicesImpl implements MemberServices{
 		return memberDAO.login(username, password);
 	}
 	public Members getListTask(String username) {
-		// TODO Auto-generated method stub
+	
 		return memberDAO.getListTask(username);
+	}
+	public Members getById(int id) {
+		
+		return memberDAO.getById(id);
 	}
 
 }

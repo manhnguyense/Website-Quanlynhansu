@@ -49,7 +49,14 @@ public class MembersController {
 		 int Total=(taskSuccess*100)/list.size();
 		 map.addAttribute("listTask", list);
 		 map.addAttribute("numSuccess",Total);
+		 map.addAttribute("user", members);
 		
 		return"TaskMemberDetail";
+	}
+	@GetMapping("contact/{id}")
+	public String getContact(ModelMap map,@PathVariable int id) {
+		Members member=mem.getById(id);
+		map.addAttribute("user", member);
+		return "activeEmployee";
 	}
 }

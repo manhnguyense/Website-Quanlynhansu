@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -34,9 +35,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysql.cj.xdevapi.JsonArray;
 
+import net.javaguides.springmvc.entity.Active;
+import net.javaguides.springmvc.entity.JsonMember;
 import net.javaguides.springmvc.entity.Members;
 import net.javaguides.springmvc.entity.Task;
 import net.javaguides.springmvc.entity.TaskDetail;
+import net.javaguides.springmvc.services.ActiveServices;
 import net.javaguides.springmvc.services.MemberServices;
 import net.javaguides.springmvc.services.TaskDetailService;
 import net.javaguides.springmvc.services.TaskServices;
@@ -51,6 +55,8 @@ public class APIController {
 	MemberServices memberServices;
 	@Autowired
 	TaskDetailService taskDetailServices;
+	@Autowired
+	ActiveServices activeServices;
 	
 	@GetMapping("add")
 	@ResponseBody
@@ -258,6 +264,61 @@ public class APIController {
 			return "true";
 		}
 		return"false";
+	}
+	
+	@PostMapping("saveActive")
+	@ResponseBody
+	public String saveActive(@RequestParam int member,@RequestParam String message,@RequestParam String file) {
+		Active active=new Active();
+		active.setFilename(file);
+		active.setMessage(message);
+		active.setDatetimecreated(new Date().toString());
+		active.setUserSend("Admin");
+		Members mem=new Members();
+		mem.setIdmember(member);
+		active.setMember(mem);
+		activeServices.saveActive(active);
+		return "true";
+		
+	}
+	@PostMapping("employSaveActive")
+	@ResponseBody
+	public String empActive(@RequestParam int id,@RequestParam String message,@RequestParam String file) {
+		Active active=new Active();
+		active.setFilename(file);
+		active.setMessage(message);
+		active.setDatetimecreated(new Date().toString());
+		Members members=memberServices.getById(id);
+		active.setUserSend(members.getName());
+		Members mem=new Members();
+		mem.setIdmember(id);
+		active.setMember(mem);
+		activeServices.saveActive(active);
+		return "true";
+		
+	}
+	@PostMapping(path="loaddata",produces="application/json;charset=utf-8")
+	@ResponseBody
+	public JsonMember loadHistory(@RequestParam int member) {
+		Members members=memberServices.getById(member);
+		JsonMember json=new JsonMember();
+		json.setAddress(members.getAddress());
+		json.setUsername(members.getUsername());
+		json.setEmail(members.getEmail());
+		json.setPassword(members.getPassword());
+		json.setSex(members.getSex());
+		json.setName(members.getName());
+		Set<Active>set=new HashSet<Active>();
+		for (Active active : members.getListActive()) {
+			Active active2=new Active();
+			active2.setFilename(active.getFilename());
+			active2.setMessage(active.getMessage());
+			active2.setDatetimecreated(active.getDatetimecreated());
+			active2.setUserSend(active.getUserSend());
+			set.add(active2);
+		}
+		json.setListActive(set);
+		return json;
 	}
 
 }

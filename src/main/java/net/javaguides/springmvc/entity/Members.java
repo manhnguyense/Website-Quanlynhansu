@@ -30,7 +30,16 @@ public class Members {
 	private String Sex;
 	private String Username;
 	private String Password;
-
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name="Idmember")
+	private Set<Active>listActive;
+	//method
+	public Set<Active> getListActive() {
+		return listActive;
+	}
+	public void setListActive(Set<Active> listActive) {
+		this.listActive = listActive;
+	}
 	public String getUsername() {
 		return Username;
 	}
