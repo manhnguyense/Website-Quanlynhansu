@@ -316,4 +316,6 @@ $(document).ready(function(){
 		
 	
 		})
+		// kanban
+		
 })

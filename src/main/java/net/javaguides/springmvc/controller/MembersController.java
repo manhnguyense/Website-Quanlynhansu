@@ -59,4 +59,12 @@ public class MembersController {
 		map.addAttribute("user", member);
 		return "activeEmployee";
 	}
+	@GetMapping("kanban/{id}")
+	public String getTaskKanban(ModelMap map,@PathVariable int id) {
+		Members member= mem.getById(id);
+		Set<Task> list=member.getListTask();
+		map.addAttribute("user", member);
+		map.addAttribute("list", list);
+		return"Kanban";
+	}
 }

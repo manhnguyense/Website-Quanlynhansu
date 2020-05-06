@@ -191,6 +191,21 @@ public class APIController {
 		}
 		return "false";
 	}
+	@PostMapping("updatestate1")
+	@ResponseBody
+	public String updateState2(@RequestParam String json) throws IOException  {
+		ObjectMapper oMapper=new ObjectMapper();
+		JsonNode jNode=oMapper.readTree(json);
+		Task task=taskServices.getMemberOfTask(jNode.get("id").asInt());
+		task.setState(jNode.get("state").asText());
+		System.out.println(json);
+		boolean rs= taskServices.updateTask(task); 
+		if(rs==true)
+		{
+			  return "true"; 
+		}
+		return "false";
+	}
 	
 	@PostMapping("login")
 	@ResponseBody

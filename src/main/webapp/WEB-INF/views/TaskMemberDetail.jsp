@@ -57,6 +57,7 @@
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">Your Task</h6>
               <a href='<c:url value="/member/contact/${user.getIdmember() }"/>'>Contact and Reports</a>
+              <a href='<c:url value="/member/kanban/${user.getIdmember() }"/>'>KANBAN for you</a>
             </div>
             <div class="card-body">
               <div class="table-responsive">
