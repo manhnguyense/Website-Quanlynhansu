@@ -42,8 +42,8 @@ public class TaskController {
 		List<Members>listmember=memberServices.getAll();
 		map.addAttribute("listTask", list);
 		map.addAttribute("listMember", listmember);
-		//return "task";
-		return "Kanban";
+		return "task";
+		
 		
 	}
 	// Scheduled send mail notify 

@@ -280,11 +280,12 @@ $(document).ready(function(){
 						$(".email").text(value.email);
 						var html1='';
 						for (var i = 0; i < value.listActive.length; i++) {
-							 html1+="<br><h4> File name: "+value.listActive[i].filename+"</h4><br>"+							
+							html1+="<br><a href='/springmvc5-hibernate5-jsp-mysql-example/resources/document/"+value.listActive[i].filename+"'>"+value.listActive[i].filename+"</a><br>"+								
 									"<h4> User send: "+value.listActive[i].userSend+"</h4><br>"+
 									"<h4> Message: "+value.listActive[i].message+"</h4><br>"+
 									"<h4> DateTime Created: "+value.listActive[i].datetimecreated+"</h4><br>";
-							html1+="<hr>";
+							
+							 html1+="<hr>";
 		
 						}
 						$(".information").html(html1);
